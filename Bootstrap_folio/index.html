@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile</title>
+  
+  <!-- ========================================== -->
+  <!-- BOOTSTRAP 5 & CORE STYLING CDNs            -->
+  <!-- ========================================== -->
+  <!-- Bootstrap 5 CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  
+  <!-- Bootstrap Icons CDN for interactive elements -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  
+  <!-- Google Fonts: Plus Jakarta Sans for a clean, modern typeface -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- ========================================== -->
+  <!-- CUSTOM STYLESHEET (For Premium Aesthetics) -->
+  <!-- ========================================== -->
+  <style>
+    /* Theme Variables for Design Consistency */
+    :root {
+      --primary-color: #4f46e5;
+      --primary-hover: #4338ca;
+      --secondary-color: #0f172a;
+      --bg-light: #f8fafc;
+      --text-main: #334155;
+      --text-muted: #64748b;
+      --accent-color: #0d9488;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Set scroll-margin-top to prevent headings from being covered by the sticky navbar */
+    #about, #academic {
+      scroll-margin-top: 100px;
+    }
+
+    mark {
+      background-color: rgba(79, 70, 229, 0.1);
+      color: var(--primary-color);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* Core Document Layout styling with Premium fixed Linear Gradient */
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 50%, #f0f7ff 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Sticky Navbar Glassmorphism styling */
+    .navbar {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+      padding: 0.85rem 0;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      color: var(--secondary-color) !important;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-link {
+      font-weight: 500;
+      color: var(--text-muted) !important;
+      transition: color 0.2s ease, transform 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: var(--primary-color) !important;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: 600;
+    }
+
+    /* Main Container Content Padding */
+    .main-content {
+      flex: 1 0 auto;
+      padding-top: 3rem;
+      padding-bottom: 4rem;
+    }
+
+    /* Student Profile Card Custom Card styling */
+    .profile-card {
+      border: none;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -15px rgba(79, 70, 229, 0.12), 0 1px 5px rgba(0, 0, 0, 0.03);
+    }
+
+    /* Header Accent Gradient Banner inside Card */
+    .card-header-gradient {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #818cf8 100%);
+      height: 160px;
+      position: relative;
+    }
+
+    /* Photo/Avatar overlay alignment */
+    .avatar-wrapper {
+      position: relative;
+      margin-top: -85px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .avatar-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 5px solid #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      background-color: #f1f5f9;
+      object-fit: cover;
+    }
+
+    /* Inner details metadata styling */
+    .uppercase-text {
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.8px;
+      font-weight: 600;
+    }
+
+    .icon-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(79, 70, 229, 0.08);
+      color: var(--primary-color);
+      flex-shrink: 0;
+    }
+
+    .detail-hover-card {
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+    .detail-hover-card:hover {
+      background-color: #e0e7ff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.05);
+    }
+
+    /* Academic Details Table Custom container */
+    .table-container {
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      padding: 1.5rem;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .table th {
+      font-weight: 600;
+      color: var(--secondary-color);
+      border-bottom: 2px solid #e2e8f0;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.8px;
+      padding: 1.1rem 0.75rem;
+    }
+
+    .table td {
+      padding: 1.1rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .subject-badge {
+      font-weight: 600;
+      color: var(--secondary-color);
+    }
+
+    .marks-badge {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+      font-weight: 600;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+
+    .total-badge {
+      background-color: rgba(79, 70, 229, 0.08);
+      color: var(--primary-color);
+      font-weight: 700;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: inline-block;
+    }
+
+    /* Premium interactive Button customization */
+    .btn-custom {
+      background-color: var(--primary-color);
+      border: none;
+      color: #ffffff;
+      font-weight: 600;
+      padding: 0.8rem 2.2rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-custom:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+      color: #ffffff;
+    }
+
+    .btn-custom:active {
+      transform: translateY(0);
+    }
+
+    /* Modern Footer styling */
+    footer {
+      background-color: var(--secondary-color);
+      color: #64748b;
+      padding: 2rem 0;
+      font-size: 0.85rem;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-title {
+      color: #ffffff !important;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Light white color styling for copyright statement */
+    .copyright-text {
+      color: rgba(255, 255, 255, 0.85) !important;
+      font-size: 0.8rem;
+    }
+
+    /* Hero Section Marquee Watermark Background */
+    #home {
+      position: relative;
+    }
+
+    .hero-marquee {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      overflow: hidden;
+      white-space: nowrap;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.05; /* Low intensity text watermark */
+      font-size: 10vw;
+      font-weight: 900;
+      letter-spacing: 12px;
+      color: #64748b; /* Neutral slate-grey color */
+      text-transform: uppercase;
+      user-select: none;
+    }
+
+    .marquee-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marqueeSlide 30s linear infinite;
+    }
+
+    .marquee-track span {
+      display: inline-block;
+    }
+
+    .hero-card-col {
+      position: relative;
+      z-index: 2; /* Positions the profile card above the marquee */
+    }
+
+    @keyframes marqueeSlide {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    /* Professional Reading Focus Hover effect for About Me paragraphs */
+    .about-bio {
+      border-left: 3px solid transparent;
+      padding-left: 0;
+      opacity: 0.75;
+      transition: border-color 0.3s ease, padding-left 0.3s ease, opacity 0.3s ease;
+    }
+
+    .about-bio:hover {
+      border-color: var(--primary-color);
+      padding-left: 16px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic background colors set in CSS background-image -->
+
+  <!-- ========================================== -->
+  <!-- 1. RESPONSIVE NAVBAR SECTION               -->
+  <!-- ========================================== -->
+  <nav class="navbar navbar-expand-md sticky-top">
+    <div class="container">
+      <!-- Navbar Brand Logo and Title -->
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <i class="bi bi-mortarboard-fill text-primary me-2 fs-4"></i>
+        <span>ANITS Portal</span>
+      </a>
+      <!-- Hamburger Toggle Button for smaller screens -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Navbar Navigation Links -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contactModal">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN LAYOUT AND GRID CONTAINER          -->
+  <!-- ========================================== -->
+  <main class="main-content">
+    <div class="container">
+      
+      <!-- ========================================== -->
+      <!-- 3. STUDENT PROFILE CARD (Hero Section)     -->
+      <!-- ========================================== -->
+      <div id="home" class="row justify-content-center align-items-center mb-5" style="min-height: calc(100vh - 90px);">
+        
+        <!-- Large sliding background name watermark -->
+        <div class="hero-marquee">
+          <div class="marquee-track">
+            <span>NITISH KUMAR BEHARA &nbsp;&bull;&nbsp; NITISH KUMAR BEHARA &nbsp;&bull;&nbsp;</span>
+            <span>NITISH KUMAR BEHARA &nbsp;&bull;&nbsp; NITISH KUMAR BEHARA &nbsp;&bull;&nbsp;</span>
+          </div>
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 hero-card-col">
+          <div class="card profile-card">
+            
+            <!-- Graphic background accent banner -->
+            <div class="card-header-gradient"></div>
+            
+            <!-- Avatar Section (uses uploaded profile image) -->
+            <div class="avatar-wrapper">
+              <img src="student_photo.jpg" class="avatar-img" alt="Nitish Kumar B Profile Photo">
+            </div>
+            
+            <!-- Profile Info Body -->
+            <div class="card-body text-center pt-0 px-4 pb-4">
+              <h3 class="card-title fw-bold mb-2">Nitish Kumar B</h3>
+              <p class="text-primary fw-semibold fs-5 mb-4">Information Technology</p>
+              
+              <hr class="my-3 opacity-50">
+              
+              <!-- Student Profile Details Grid System -->
+              <div class="row text-start g-3 my-1">
+                <!-- Roll Number Details Box -->
+                <div class="col-6">
+                  <div class="p-3 bg-light rounded-3 h-100">
+                    <small class="text-muted d-block uppercase-text mb-1">Roll Number</small>
+                    <span class="fw-semibold text-dark fs-6">A24126511007</span>
+                  </div>
+                </div>
+                <!-- Branch Details Box -->
+                <div class="col-6">
+                  <div class="p-3 bg-light rounded-3 h-100">
+                    <small class="text-muted d-block uppercase-text mb-1">Branch</small>
+                    <span class="fw-semibold text-dark fs-6">IT</span>
+                  </div>
+                </div>
+                <!-- Email ID Details Box -->
+                <div class="col-12">
+                  <a href="mailto:beharanitishkumar.24.it@anits.edu.in" class="text-decoration-none d-block">
+                    <div class="p-3 bg-light rounded-3 d-flex align-items-center detail-hover-card">
+                      <div class="icon-circle me-3">
+                        <i class="bi bi-envelope-fill fs-5"></i>
+                      </div>
+                      <div>
+                        <small class="text-muted d-block uppercase-text mb-1">Email ID</small>
+                        <span class="fw-semibold text-dark fs-6">beharanitishkumar.24.it@anits.edu.in</span>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ========================================== -->
+      <!-- ABOUT ME SECTION                           -->
+      <!-- ========================================== -->
+      <div id="about" class="row mb-5 justify-content-center">
+        <div class="col-lg-9">
+          
+          <!-- Section Heading -->
+          <h4 class="fw-bold mb-4 text-start d-flex align-items-center">
+            <i class="bi bi-person-fill text-primary me-2"></i>
+            About Me
+          </h4>
+          
+          <!-- About Biography Card -->
+          <div class="card border-0 shadow-sm rounded-4 p-4" style="background: #ffffff; border: 1px solid rgba(226, 232, 240, 0.8) !important;">
+            <p class="lh-lg mb-3 about-bio">
+              <span>Hello! I'm</span> <strong>Nitish Kumar Behara</strong>, <span>a third-year</span>
+              <strong>B.Tech Information Technology</strong> <span>student at</span>
+              <strong>ANITS</strong>. <span>I am an enthusiastic learner with a passion for</span>
+              <span>building innovative software solutions and continuously expanding my</span>
+              <span>technical knowledge. I enjoy exploring emerging technologies and</span>
+              <span>transforming ideas into practical applications.</span>
+            </p>
+            
+            <p class="lh-lg mb-0 about-bio">
+              <span>My primary areas of interest are</span>
+              <mark>Cybersecurity</mark> <span>and</span>
+              <mark>Quantum Computing</mark>. <span>I am fascinated by how these fields are</span>
+              <span>shaping the future of technology and solving complex real-world</span>
+              <span>problems. Along with programming, I actively improve my skills in</span>
+              <em>HTML, CSS, JavaScript, React, Java, and Python</em>, <span>and I enjoy</span>
+              <span>creating responsive and user-friendly web applications.</span>
+            </p>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- ========================================== -->
+      <!-- 4. ACADEMIC DETAILS SECTION                -->
+      <!-- ========================================== -->
+      <div id="academic" class="row justify-content-center">
+        <div class="col-lg-9">
+          
+          <!-- Table Header / Title -->
+          <h4 class="fw-bold mb-4 text-start d-flex align-items-center">
+            <i class="bi bi-journal-bookmark-fill text-primary me-2"></i>
+            Academic Details
+          </h4>
+          
+          <!-- Table Wrapper to ensure clean horizontal scrolls on mobile -->
+          <div class="table-container mb-4">
+            <div class="table-responsive">
+              <table class="table table-hover align-middle">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 45%;">Subject Name</th>
+                    <th scope="col" class="text-center">Internal Marks (30)</th>
+                    <th scope="col" class="text-center">External Marks (70)</th>
+                    <th scope="col" class="text-center">Total Marks (100)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Subject 1 -->
+                  <tr>
+                    <td>
+                      <span class="subject-badge">Database Management Systems</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">28</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">62</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="total-badge">90</span>
+                    </td>
+                  </tr>
+                  <!-- Subject 2 -->
+                  <tr>
+                    <td>
+                      <span class="subject-badge">Data Structures & Algorithms</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">29</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">65</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="total-badge">94</span>
+                    </td>
+                  </tr>
+                  <!-- Subject 3 -->
+                  <tr>
+                    <td>
+                      <span class="subject-badge">Web Development</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">30</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">68</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="total-badge">98</span>
+                    </td>
+                  </tr>
+                  <!-- Subject 4 -->
+                  <tr>
+                    <td>
+                      <span class="subject-badge">Computer Networks</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">26</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">58</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="total-badge">84</span>
+                    </td>
+                  </tr>
+                  <!-- Subject 5 -->
+                  <tr>
+                    <td>
+                      <span class="subject-badge">Operating Systems</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">27</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="marks-badge">60</span>
+                    </td>
+                    <td class="text-center">
+                      <span class="total-badge">87</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <!-- 5. CENTERED SUBMIT/ACTION BUTTON -->
+          <div class="text-center mt-4">
+            <button class="btn btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#profileModal">
+              <i class="bi bi-eye-fill me-2"></i>View Profile
+            </button>
+          </div>
+          
+        </div>
+      </div>
+      
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 6. BOOTSTRAP MODAL FOR VIEW PROFILE POPUP  -->
+  <!-- ========================================== -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow rounded-4">
+        <!-- Modal Close Header -->
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="profileModalLabel">Official Student Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Modal Content Details -->
+        <div class="modal-body text-center p-4">
+          <!-- Verification visual icon -->
+          <div class="mb-3 text-success">
+            <i class="bi bi-patch-check-fill" style="font-size: 3rem;"></i>
+          </div>
+          <h4 class="fw-bold mb-1">Nitish Kumar B</h4>
+          <p class="text-muted mb-3">Roll No: A24126511007</p>
+          
+          <!-- Quick Institution Stats Grid -->
+          <div class="bg-light p-3 rounded-3 mb-3 text-start">
+            <div class="row g-2">
+              <div class="col-6">
+                <span class="text-muted d-block small">Institution</span>
+                <strong class="text-dark small">ANITS</strong>
+              </div>
+              <div class="col-6">
+                <span class="text-muted d-block small">Department</span>
+                <strong class="text-dark small">Information Technology</strong>
+              </div>
+              <div class="col-6 mt-2">
+                <span class="text-muted d-block small">Semester / Year</span>
+                <strong class="text-dark small">5th Sem / 3rd Year</strong>
+              </div>
+              <div class="col-6 mt-2">
+                <span class="text-muted d-block small">Overall CGPA</span>
+                <strong class="text-success small">8.25 / 10.0</strong>
+              </div>
+            </div>
+          </div>
+          
+          <p class="small text-muted mb-0"><i class="bi bi-shield-fill-check text-success me-1"></i>Digital profile securely verified by administration.</p>
+        </div>
+        <!-- Close button at the bottom -->
+        <div class="modal-footer border-0 pt-0 justify-content-center">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 6.5 BOOTSTRAP MODAL FOR CONTACT POPUP      -->
+  <!-- ========================================== -->
+  <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow rounded-4">
+        <!-- Modal Header -->
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold" id="contactModalLabel">Contact Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body text-center p-4">
+          <!-- Icon -->
+          <div class="mb-3 text-primary">
+            <i class="bi bi-envelope-open-fill" style="font-size: 3rem;"></i>
+          </div>
+          <h5 class="fw-bold mb-2">Nitish Kumar Behara</h5>
+          <p class="text-muted small mb-3">Feel free to reach out via email</p>
+          
+          <!-- Email display box -->
+          <div class="bg-light p-3 rounded-3 mb-0 text-center">
+            <span class="text-muted d-block uppercase-text mb-1" style="font-size: 0.75rem; letter-spacing: 0.5px;">Official Email</span>
+            <a href="mailto:beharanitishkumar.24.it@anits.edu.in" class="text-decoration-none"><strong class="text-primary fs-6">beharanitishkumar.24.it@anits.edu.in</strong></a>
+          </div>
+        </div>
+        <!-- Modal Footer -->
+        <div class="modal-footer border-0 pt-0 justify-content-center">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 7. PROFESSIONAL COLLEGE FOOTER             -->
+  <!-- ========================================== -->
+  <footer id="footer" class="mt-auto">
+    <div class="container text-center py-2">
+      <p class="footer-title">Anil Neerukonda Institute of Technology & Sciences (ANITS)</p>
+      <p class="mb-0 copyright-text">© 2026 ANITS. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- BOOTSTRAP 5 JAVASCRIPT BUNDLE (WITH POPPER)-->
+  <!-- ========================================== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
